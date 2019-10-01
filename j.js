@@ -1,7 +1,24 @@
-function calculate(){
+var dueDays = null;
+window.onload = function (event){
+    dueDays = [25, 25, 27, 27, 25, 25, 27, 25, 26, 27, 25, 25, 26, 25, 28];
+    setDueDate();
+}
+var m = null;
 
+function setDueDate(){
+    let date = document.getElementById("month");
+    let dueDate = document.getElementById("termin");
+
+    m = parseInt(date.value) + 1;
+    
+    dueDate.innerText = "Termin płatności : " + dueDays[m] + " " + document.querySelectorAll("option[value='" + m + "']")[0].innerText + " " + document.querySelectorAll("option[value='" + m + "']")[0].parentNode.label;
+    document.getElementById("payDay").innerText = document.querySelectorAll("option[value='" + m + "']")[0].innerText;
+}
+
+function calculate(){
+    let wynText = document.getElementById("wynik");
     if (!navigator.onLine){
-        document.getElementById("wynik").innerText = "Nie można połączyć się z serwerem NBP";   
+        wynText.innerText = "Nie można połączyć się z serwerem NBP";   
     }
 
     var request = new XMLHttpRequest();
@@ -10,7 +27,7 @@ function calculate(){
     request.onload = function(){
 
         if (this.status != 200){
-            document.getElementById("wynik").innerText = "Nie można połączyć się z serwerem NBP";   
+            wynText.innerText = "Nie można połączyć się z serwerem NBP";   
         }
 
         try {
@@ -19,23 +36,35 @@ function calculate(){
 
             var oprocentowanie = xmlDoc.getElementsByTagName("stopy_procentowe")[0].childNodes[1].childNodes[1].getAttribute('oprocentowanie');
             var opr = escape(parseFloat(oprocentowanie.replace(',', '.').replace(' ', '')));
+            opr = opr / 100;
             console.log(opr);
             var kzp = escape(parseFloat(document.getElementById("kzp").value.replace(',', '.').replace(' ', '')));
             console.log(kzp);
-            var dni = escape(parseInt(document.getElementById("liczbaDni").value));
+            var dni = dueDays[m] - escape(parseInt(document.getElementById("liczbaDni").value));
+            if (dni > dueDays[m] || dni < 0){
+                wynText.innerText = "Dzień zapłaty jest nie poprawny";
+                return;
+            }
             console.log(dni);
 
-            var wynik = kzp * opr * (dni/365)
+            var wynik = kzp * opr * (dni/365);
+            console.log(wynik);
+            
             if (!isNaN(wynik)){
-                document.getElementById("wynik").innerText = wynik.toFixed(2);   
+                if (wynik > 1){
+                    wynText.innerText = wynik.toFixed(0);   
+                }
+                if (wynik < 1){
+                    wynText.innerText = wynik.toFixed(1);   
+                }
             }
             else
             {
-                document.getElementById("wynik").innerText = "Coś poszło nie tak, sprawdź wpisane dane i spróbuj ponownie";
+                wynText.innerText = "Coś poszło nie tak, sprawdź wpisane dane i spróbuj ponownie";
             }
             
         } catch (error) {
-            document.getElementById("wynik").innerText = "Coś poszło nie tak, spróbuj ponownie";
+            wynText.innerText = "Coś poszło nie tak, spróbuj ponownie";
         }
         
     }
@@ -43,6 +72,7 @@ function calculate(){
     request.send();
     }
     catch (error) {
-        document.getElementById("wynik").innerText = "Coś poszło nie tak, spróbuj ponownie";
+        wynText.innerText = "Coś poszło nie tak, spróbuj ponownie";
     }
+    
 }

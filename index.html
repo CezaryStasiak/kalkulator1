@@ -7,17 +7,41 @@
     <title>Document</title>
 </head>
 <body>
+    
+    Miesiąc za który płacony jest VAT:<br/>
+    <select name="miesiac" id="month" onclick="setDueDate()" >
+        <optgroup label="2019">
+            <option value = "0">Wrzesień</option>
+            <option value = "1">Październik</option>
+            <option value = "2">Listopad</option>
+            <option value = "3">Grudzień</option>
+        </optgroup>
+        <optgroup label="2020">
+                <option value = "4">Styczeń</option>
+                <option value = "5">Luty</option>
+                <option value = "6">Marzec</option>
+                <option value = "7">Kwiecień</option>
+                <option value = "8">Maj</option>
+                <option value = "9">Czerwiec</option>
+                <option value = "10">Lipiec</option>
+                <option value = "11">Sierpień</option>
+                <option value = "12">Wrzesień</option>
+                <option value = "13">Październik</option>
+                <option value = "14" style="visibility: hidden;">Listopad</option>
+        </optgroup>
+    </select>
+    <br/>
+    <div id="termin" style="font: bold; font-size: 20px"></div>
+    Dzien platnosci:<br/>
+    <input type="tel" id="liczbaDni" value=""><div id="payDay"></div><br/>
     Kwota zobowiązania podatkowego:<br/>
 
     <input type="tel" id="kzp" value="">
 
     <br />
-    Liczba dni od dnia, w którym obciążono rachunek bankowy albo rachunek w SKOK, dla<br/>
-    których jest prowadzony rachunek VAT, z wyłączeniem tego dnia, do dnia, w którym<br/>
-    upływa termin zapłaty podatku, włącznie z tym dniem:<br/>
-    <input type="tel" id="liczbaDni" value="">
-    <div id="wynik"></div>
+    <div id="wynik" style="font: bold; font-size: 20px"></div>
     <button type="submit" onclick="calculate()">Oblicz</button>
-<script src="j.js"></script>
+<script src="j.js">
+</script>
 </body>
 </html>
