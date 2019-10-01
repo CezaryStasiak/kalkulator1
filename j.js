@@ -1,8 +1,5 @@
 var dueDays = null;
-window.onload = function (event){
-    dueDays = [25, 25, 27, 27, 25, 25, 27, 25, 26, 27, 25, 25, 26, 25, 28];
-    setDueDate();
-}
+
 var m = null;
 
 function setDueDate(){
@@ -75,4 +72,9 @@ function calculate(){
         wynText.innerText = "Coś poszło nie tak, spróbuj ponownie";
     }
     
+}
+
+window.onload = function (event){
+    dueDays = [25, 25, 27, 27, 25, 25, 27, 25, 26, 27, 25, 25, 26, 25, 28];
+    setDueDate();
 }
