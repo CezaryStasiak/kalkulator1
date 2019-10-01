@@ -52,10 +52,10 @@ function calculate(){
             
             if (!isNaN(wynik)){
                 if (wynik > 1){
-                    wynText.innerText = wynik.toFixed(0);   
+                    wynText.innerText = wynik.toFixed(0) + " zł";   
                 }
                 if (wynik < 1){
-                    wynText.innerText = wynik.toFixed(1);   
+                    wynText.innerText = wynik.toFixed(1) + " zł";   
                 }
             }
             else
