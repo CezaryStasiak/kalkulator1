@@ -34,17 +34,23 @@ function calculate(){
             var oprocentowanie = xmlDoc.getElementsByTagName("stopy_procentowe")[0].childNodes[1].childNodes[1].getAttribute('oprocentowanie');
             var opr = escape(parseFloat(oprocentowanie.replace(',', '.').replace(' ', '')));
             opr = opr / 100;
-            console.log(opr);
             var kzp = escape(parseFloat(document.getElementById("kzp").value.replace(',', '.').replace(' ', '')));
-            console.log(kzp);
             var dni = dueDays[m] - escape(parseInt(document.getElementById("liczbaDni").value));
             if (dni > dueDays[m] || dni < 0){
                 wynText.innerText = "Dzień zapłaty jest nie poprawny";
                 return;
             }
-            console.log(dni);
-
-            var wynik = kzp * opr * (dni/365);
+            
+            var wynik = (kzp * opr)/360;
+            console.log(wynik);
+            if (wynik < 1){
+                wynik = wynik.toFixed(3);
+            }
+            else{
+                wynik = wynik.toFixed(2);
+            }
+            console.log(wynik);
+            wynik = wynik * dni;
             console.log(wynik);
             
             if (!isNaN(wynik)){
@@ -52,7 +58,7 @@ function calculate(){
                     wynText.innerText = wynik.toFixed(0) + " zł";   
                 }
                 if (wynik < 1){
-                    wynText.innerText = wynik.toFixed(1) + " zł";   
+                    wynText.innerText = wynik.toFixed(0) + " zł";   
                 }
             }
             else
@@ -75,6 +81,6 @@ function calculate(){
 }
 
 window.onload = function (event){
-    dueDays = [25, 25, 27, 27, 25, 25, 27, 25, 26, 27, 25, 25, 26, 25, 28];
+    dueDays = [25, 25, 25, 27, 25, 25, 27, 25, 26, 27, 25, 25, 26, 25, 28];
     setDueDate();
 }
